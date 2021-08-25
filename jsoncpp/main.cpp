@@ -27,8 +27,10 @@ int main()
 	cout << e6["String"]->getStr() << endl;
 	cout << e6["Array"]->arrProxy()[0]->getFloat() << endl;
 	cout << e6["Array"][0]->getFloat() << endl;
-	// e6["String"] = "New String Value";
 	cout << e6["String"]->getStr() << endl;
+	cout << e6 << endl;
+
+	e6["String"] = "New String Value";
 	cout << e6 << endl;
 	return 0;
 }

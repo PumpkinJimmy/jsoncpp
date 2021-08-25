@@ -131,6 +131,26 @@ namespace Json {
 	{
 		return (*this)->get(key);
 	}
+	EntryProxy& EntryProxy::operator=(int i)
+	{
+		*(*this) = i;
+		return *this;
+	}
+	EntryProxy& EntryProxy::operator=(double f)
+	{
+		*(*this) = f;
+		return *this;
+	}
+	EntryProxy& EntryProxy::operator=(const string& s)
+	{
+		*(*this) = s;
+		return *this;
+	}
+	EntryProxy& EntryProxy::operator=(string&& s)
+	{
+		*(*this) = std::move(s);
+		return *this;
+	}
 }
 
 

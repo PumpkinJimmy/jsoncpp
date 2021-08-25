@@ -39,6 +39,10 @@ public:
 	EntryProxy operator[](int idx) const;
 	EntryProxy operator[](const string& key) const;
 	EntryProxy& operator[](const string& key);
+	EntryProxy& operator=(int i);
+	EntryProxy& operator=(double f);
+	EntryProxy& operator=(const string& s);
+	EntryProxy& operator=(string&& s);
 };
 
 class Entry
@@ -64,12 +68,38 @@ public:
 		data.iNum = 0;
 	}
 
+	Entry(const Entry& etry) = default;
+
+	Entry(Entry&& etry) = default;
+
 	Entry(int i) : type(Number), isInt(true) {
 		data.iNum = i;
 	}
+
+	Entry& operator=(int i) {
+		type = Number;
+		isInt = true;
+		data.iNum = i;
+		str.clear();
+		arr.clear();
+		obj.clear();
+		return *this;
+	}
+
 	Entry(double f) : type(Number), isInt(false) {
 		data.fNum = f;
 	}
+
+	Entry& operator=(double f) {
+		type = Number;
+		isInt = false;
+		data.fNum = f;
+		str.clear();
+		arr.clear();
+		obj.clear();
+		return *this;
+	}
+
 	Entry(bool b, Type t) {
 		if (t == Bool) {
 			type = Bool;
@@ -87,7 +117,23 @@ public:
 
 	Entry(const string& s): type(Str), str(s){}
 
+	Entry& operator=(const string& s) {
+		type = Str;
+		str = s;
+		arr.clear();
+		obj.clear();
+		return *this;
+	}
+
 	Entry(string&& s) : type(Str), str(s) {}
+
+	Entry& operator=(string&& s) {
+		type = Str;
+		str = std::move(s);
+		arr.clear();
+		obj.clear();
+		return *this;
+	}
 
 	Entry(const arrType& ar) : type(Array), arr(ar) {}
 
