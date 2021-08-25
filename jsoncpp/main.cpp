@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Entry.h"
+#include "any.h"
 using namespace std;
 using Json::Entry;
 int main()
@@ -32,5 +33,11 @@ int main()
 
 	e6["String"] = "New String Value";
 	cout << e6 << endl;
+
+
+	//Any any = 10;
+	//cout << any.get<int>() << endl;
+	//any = (const char*)("Any: Integer to String");
+	//cout << any.get<string>() << endl;
 	return 0;
 }
