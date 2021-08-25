@@ -11,6 +11,7 @@
 #include <map>
 #include <memory>
 #include <iostream>
+#include <sstream>
 
 namespace Json {
 
@@ -19,6 +20,7 @@ using std::string;
 using std::vector;
 using std::pair;
 using std::make_shared;
+
 class Entry;
 class EntryProxy;
 
@@ -221,7 +223,8 @@ public:
 		return arr[idx];
 	}
 
-
+	string stringfy() const ;
+	string pretty_stringfy() const;
 	
 
 
