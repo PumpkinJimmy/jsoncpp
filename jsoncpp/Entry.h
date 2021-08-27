@@ -29,20 +29,23 @@ std::ostream& operator<<(std::ostream& out, const EntryProxy etry);
 
 class Entry;
 
-/*  experimental  */
 class EntryProxy : public shared_ptr<Entry> {
 public:
-	EntryProxy() : shared_ptr() {}
+	EntryProxy() : shared_ptr(make_shared<Entry>()) {}
 	EntryProxy(const shared_ptr<Entry>& p) : shared_ptr<Entry>(p) {}
 	/* Subscript Operation */
 	EntryProxy& operator[](int idx);
 	EntryProxy operator[](int idx) const;
 	EntryProxy operator[](const string& key) const;
 	EntryProxy& operator[](const string& key);
+	EntryProxy& operator=(const Entry& etry);
 	EntryProxy& operator=(int i);
 	EntryProxy& operator=(double f);
 	EntryProxy& operator=(const string& s);
 	EntryProxy& operator=(string&& s);
+	EntryProxy clone() {
+		return make_shared<Entry>(*(*this));
+	}
 };
 
 class Entry
@@ -62,6 +65,10 @@ public:
 	static const Entry True;
 	static const Entry False;
 	static const Entry _Null;
+	
+	static const Entry EmptyObject;
+	static const Entry EmptyArray;
+
 	/* Constructors */
 
 	Entry() : type(Null), isInt(false) {
@@ -71,6 +78,8 @@ public:
 	Entry(const Entry& etry) = default;
 
 	Entry(Entry&& etry) = default;
+
+	Entry& operator=(const Entry &) = default;
 
 	Entry(int i) : type(Number), isInt(true) {
 		data.iNum = i;
@@ -272,7 +281,7 @@ public:
 	string stringfy() const ;
 	string pretty_stringfy() const;
 	
-
+	
 
 private:
 	union {

@@ -19,6 +19,8 @@ namespace Json {
 	const Entry Entry::True(true, Entry::Bool);
 	const Entry Entry::False(false, Entry::Bool);
 	const Entry Entry::_Null;
+	const Entry Entry::EmptyArray = Entry::arrType();
+	const Entry Entry::EmptyObject = Entry::objType();
 
 	string Entry::stringfy() const
 	{
@@ -28,10 +30,10 @@ namespace Json {
 			out << "null";
 			break;
 		case Json::Entry::Number:
-			out << isInt ? data.iNum : data.fNum;
+			out << (isInt ? data.iNum : data.fNum);
 			break;
 		case Json::Entry::Bool:
-			out << data.bNum ? "true" : "false";
+			out << (data.bNum ? "true" : "false");
 			break;
 		case Json::Entry::Str:
 			out << '"' << str << '"';
@@ -75,10 +77,10 @@ namespace Json {
 			out << "null";
 			break;
 		case Json::Entry::Number:
-			out << isInt ? data.iNum : data.fNum;
+			out << (isInt ? data.iNum : data.fNum);
 			break;
 		case Json::Entry::Bool:
-			out << data.bNum ? "true" : "false";
+			out << (data.bNum ? "true" : "false");
 			break;
 		case Json::Entry::Str:
 			out << '"' << str << '"';
@@ -130,6 +132,11 @@ namespace Json {
 	EntryProxy& EntryProxy::operator[](const string& key)
 	{
 		return (*this)->get(key);
+	}
+	EntryProxy& EntryProxy::operator=(const Entry& etry)
+	{
+		*(*this) = etry;
+		return *this;
 	}
 	EntryProxy& EntryProxy::operator=(int i)
 	{

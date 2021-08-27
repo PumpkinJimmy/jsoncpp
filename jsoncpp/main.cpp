@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Entry.h"
 #include "any.h"
+#include "parser.h"
 using namespace std;
 using Json::Entry;
 int main()
@@ -35,9 +36,24 @@ int main()
 	cout << e6 << endl;
 
 
-	//Any any = 10;
-	//cout << any.get<int>() << endl;
-	//any = (const char*)("Any: Integer to String");
-	//cout << any.get<string>() << endl;
+	Any any = 10;
+	cout << any.get<int>() << endl;
+	any = "Any: Integer to String";
+	cout << any.get<char[]>() << endl;
+	cout << any.get<string>() << endl;
+
+	Entry::Ptr etry1;
+	cout << Json::Parser::parse(
+R"(
+	{
+	  "null": null,
+	  "Number": -114514.1998,
+	  "Bool": true,
+	  "String": "parse from string",
+	  "Array": [ 251, false, 996, "Fu Bao!" ]\
+	}
+)", 
+		etry1) << endl;
+	cout << etry1 << endl;
 	return 0;
 }
